@@ -81,36 +81,51 @@
 		callback = callback || function () {};
 
 		// Generate an ID
-	    var newId = ""; 
-	    var charset = "0123456789";
+	    // var newId = ""; 
+	    // var charset = "0123456789";
 
-        for (var i = 0; i < 6; i++) {
-     		newId += charset.charAt(Math.floor(Math.random() * charset.length));
+        // for (var i = 0; i < 6; i++) {
+     	// 	newId += charset.charAt(Math.floor(Math.random() * charset.length));
+		// }
+
+		// // If an ID was actually given, find the item and update each property
+		// if (id) {
+		// 	for (var i = 0; i < todos.length; i++) {
+		// 		if (todos[i].id === id) {
+		// 			for (var key in updateData) {
+		// 				todos[i][key] = updateData[key];
+		// 			}
+		// 			break;
+		// 		}
+		// 	}
+
+		// 	localStorage[this._dbName] = JSON.stringify(data);
+		// 	callback.call(this, todos);
+		// } else {
+
+    	// 	// Assign an ID
+		// 	updateData.id = parseInt(newId);
+    
+
+		// 	todos.push(updateData);
+		// 	localStorage[this._dbName] = JSON.stringify(data);
+		// 	callback.call(this, [updateData]);
+		// }
+		function create_UUID(){
+			var dt = new Date().getTime();
+			var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = (dt + Math.random()*16)%16 | 0;
+				dt = Math.floor(dt/16);
+				return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+			});
+			return uuid;
 		}
-
-		// If an ID was actually given, find the item and update each property
-		if (id) {
-			for (var i = 0; i < todos.length; i++) {
-				if (todos[i].id === id) {
-					for (var key in updateData) {
-						todos[i][key] = updateData[key];
-					}
-					break;
-				}
-			}
-
-			localStorage[this._dbName] = JSON.stringify(data);
-			callback.call(this, todos);
-		} else {
-
-    		// Assign an ID
-			updateData.id = parseInt(newId);
+		updateData.id = create_UUID();
     
 
 			todos.push(updateData);
 			localStorage[this._dbName] = JSON.stringify(data);
 			callback.call(this, [updateData]);
-		}
 	};
 
 	/**
@@ -125,13 +140,13 @@
 		var todoId;
 		
 		for (var i = 0; i < todos.length; i++) {
-			if (todos[i].id == id) {
+			if (todos[i].id === id) {
 				todoId = todos[i].id;
 			}
 		}
 
 		for (var i = 0; i < todos.length; i++) {
-			if (todos[i].id == todoId) {
+			if (todos[i].id === todoId) {
 				todos.splice(i, 1);
 			}
 		}
