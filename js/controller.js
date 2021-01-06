@@ -4,9 +4,6 @@
 	/**
 	 * Takes a model and view and acts as the controller between them
 	 *
-	 * @constructor
-	 * @param {object} model The model instance
-	 * @param {object} view The view instance
 	 */
 	function Controller(model, view) {
 		var self = this;
@@ -48,8 +45,6 @@
 
 	/**
 	 * Loads and initialises the view
-	 *
-	 * @param {string} '' | 'active' | 'completed'
 	 */
 	Controller.prototype.setView = function (locationHash) {
 		var route = locationHash.split('/')[1];
@@ -162,12 +157,6 @@
 			items = data;
 		});
 
-		items.forEach(function(item) {
-			if (item.id === id) {
-				console.log("Element with ID: " + id + " has been removed.");
-			}
-		});
-
 		self.model.remove(id, function () {
 			self.view.render('removeItem', id);
 		});
@@ -193,10 +182,6 @@
 	 * Give it an ID of a model and a checkbox and it will update the item
 	 * in storage based on the checkbox's state.
 	 *
-	 * @param {number} id The ID of the element to complete or uncomplete
-	 * @param {object} checkbox The checkbox to check the state of complete
-	 *                          or not
-	 * @param {boolean|undefined} silent Prevent re-filtering the todo items
 	 */
 	Controller.prototype.toggleComplete = function (id, completed, silent) {
 		var self = this;
@@ -247,7 +232,6 @@
 
 	/**
 	 * Re-filters the todo items, based on the active route.
-	 * @param {boolean|undefined} force  forces a re-painting of todo items.
 	 */
 	Controller.prototype._filter = function (force) {
 		var activeRoute = this._activeRoute.charAt(0).toUpperCase() + this._activeRoute.substr(1);
